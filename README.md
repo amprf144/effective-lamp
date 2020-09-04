@@ -1,2 +1,2 @@
 # effective-lamp
-Test
+Various tests, and scripts.  
