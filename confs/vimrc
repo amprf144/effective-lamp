@@ -1,0 +1,16 @@
+set nocompatible
+set laststatus=2
+set confirm
+set backup
+set backupdir=/tmp/bergen/vi
+set wrap
+set ignorecase
+set showcmd
+set ruler
+set undolevels=1000
+set number
+if has('gui_running')
+  set guioptions-=T  " no toolbar
+  colorscheme frontier-contrast
+  set hlsearch
+endif
