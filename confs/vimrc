@@ -2,7 +2,7 @@ set nocompatible
 set laststatus=2
 set confirm
 set backup
-set backupdir=/tmp/bergen/vi
+set backupdir=/tmp/vi
 set wrap
 set ignorecase
 set showcmd
