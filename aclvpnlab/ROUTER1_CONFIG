@@ -1,0 +1,96 @@
+
+!
+! Last configuration change at 12:55:11 UTC Mon Apr 12 2021
+!
+version 16.7
+service timestamps debug datetime msec
+service timestamps log datetime msec
+platform qfp utilization monitor load 80
+no platform punt-keepalive disable-kernel-core
+!
+hostname R1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+license udi pid ISR4221/K9 sn FJC2425D0L8
+no license smart enable
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+!
+!
+!
+!
+redundancy
+ mode none
+!
+!
+!
+!
+!
+!
+!
+!
+interface GigabitEthernet0/0/0
+ ip address 10.10.1.1 255.255.255.0
+ negotiation auto
+!
+interface GigabitEthernet0/0/1
+ ip address 10.10.2.2 255.255.255.0
+ negotiation auto
+!
+ip forward-protocol nd
+no ip http server
+ip http secure-server
+ip route 10.10.3.0 255.255.255.0 10.10.2.1
+ip route 10.10.4.0 255.255.255.0 10.10.2.1
+!
+!
+!
+!
+!
+!
+control-plane
+!
+!
+line con 0
+ transport input none
+ stopbits 1
+line vty 0 4
+ login
+!
+wsma agent exec
+!
+wsma agent config
+!
+wsma agent filesys
+!
+wsma agent notify
+!
+!
+end
