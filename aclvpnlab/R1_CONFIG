@@ -1,6 +1,6 @@
 
 !
-! Last configuration change at 12:53:19 UTC Tue Apr 13 2021
+! Last configuration change at 13:56:57 UTC Tue Apr 13 2021
 !
 version 16.7
 service timestamps debug datetime msec
@@ -74,7 +74,15 @@ crypto isakmp policy 1
 crypto isakmp key cisco address 10.10.4.0      
 !
 !
+crypto ipsec transform-set R1-R3 esp-aes 256 esp-sha-hmac 
+ mode tunnel
 !
+!
+!
+crypto map R1-R2 10 ipsec-isakmp 
+ set peer 10.10.3.2
+ set transform-set R1-R3 
+ match address 100
 !
 !
 !
@@ -90,6 +98,7 @@ interface GigabitEthernet0/0/0
 interface GigabitEthernet0/0/1
  ip address 10.10.2.2 255.255.255.0
  negotiation auto
+ crypto map R1-R2
 !
 ip forward-protocol nd
 no ip http server
