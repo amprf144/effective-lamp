@@ -71,20 +71,14 @@ crypto isakmp policy 1
  encr aes 256
  authentication pre-share
  group 5     
-crypto isakmp key cisco address 10.10.1.0      
+crypto isakmp key cisco address 10.10.1.0
 !
 !
 crypto ipsec transform-set R1-R3 esp-aes 256 esp-sha-hmac 
  mode tunnel
-crypto ipsec transform-set R3-R1 esp-aes 256 esp-sha-hmac 
- mode tunnel
 !
 !
 !
-crypto map R1-R2 10 ipsec-isakmp 
- set peer 10.10.3.2
- set transform-set R1-R3 
- match address 100
 !
 crypto map R3-R1 10 ipsec-isakmp 
  set peer 10.10.2.2
