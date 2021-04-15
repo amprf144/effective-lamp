@@ -74,7 +74,15 @@ crypto isakmp policy 1
 crypto isakmp key cisco address 10.10.1.0      
 !
 !
+crypto ipsec transform-set R3-R1 esp-aes 256 esp-sha-hmac 
+ mode tunnel
 !
+!
+!
+crypto map R3-R1 10 ipsec-isakmp 
+ set peer 10.10.2.2
+ set transform-set R3-R1 
+ match address 100
 !
 !
 !
