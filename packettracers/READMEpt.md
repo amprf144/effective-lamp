@@ -1,1 +1,0 @@
-Packet tracer device configurations
