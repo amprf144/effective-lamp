@@ -25,50 +25,57 @@ no ipv6 cef
 !
 !
 !
-no ip domain-lookup
 !
 !
 spanning-tree mode pvst
 !
-class-map type inspect match-any R3-R1
+class-map type inspect match-any TFTP
+ match protocol tftp
+class-map type inspect match-any HTTP
+ match protocol http
+ match protocol https
+class-map type inspect match-any DNS
+ match protocol dns
+class-map type inspect match-any ICMP
  match protocol icmp
-class-map type inspect match-any R1-R3_Policy
- match protocol icmp
-class-map type inspect match-any R3-R1_Policy
- match protocol icmp
-class-map match-all ICMP
- description ICMP Matching for router one to router three
- match protocol icmp
-class-map type inspect match-all TFTP
- match protocol udp
-class-map type inspect match-all UDP
- match protocol udp
 !
 policy-map type inspect R3-R1_Policy
+ class type inspect ICMP
+  inspect
+ class type inspect DNS
+  inspect
+ class type inspect TFTP
+  inspect
+ class type inspect HTTP
+  inspect
 !
 policy-map type inspect R1-R3_Policy
-!
-policy-map type inspect TFTP
  class type inspect TFTP
+  inspect
+ class type inspect HTTP
+  inspect
+ class type inspect DNS
   inspect
 !
 !
 !
-zone security R1-Zone
 zone security R3-Zone
-zone-pair security R1-R3 source R1-Zone destination R3-Zone
- service-policy type inspect R1-R3_Policy
+zone security R1-Zone
 zone-pair security R3-R1 source R3-Zone destination R1-Zone
  service-policy type inspect R3-R1_Policy
+zone-pair security R1-R3 source R1-Zone destination R3-Zone
+ service-policy type inspect R1-R3_Policy
 !
 !
 interface GigabitEthernet0/0/0
  ip address 10.10.30.1 255.255.255.0
+ zone-member security R3-Zone
  duplex auto
  speed auto
 !
 interface GigabitEthernet0/0/1
  ip address 10.10.20.2 255.255.255.0
+ zone-member security R1-Zone
  duplex auto
  speed auto
 !
@@ -105,3 +112,4 @@ line vty 0 4
 !
 !
 end
+
