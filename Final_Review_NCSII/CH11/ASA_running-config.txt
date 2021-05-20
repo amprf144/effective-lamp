@@ -1,0 +1,80 @@
+: Saved
+:
+ASA Version 8.4(2)
+!
+hostname CCNAS-ASA
+domain-name ccnasecurity.com
+enable password n0KLRIeUdCEjU8lj encrypted
+names
+!
+interface Ethernet0/0
+ switchport access vlan 2
+!
+interface Ethernet0/1
+ switchport access vlan 1
+!
+interface Ethernet0/2
+ switchport access vlan 1
+!
+interface Ethernet0/3
+ switchport access vlan 1
+!
+interface Ethernet0/4
+ switchport access vlan 1
+!
+interface Ethernet0/5
+ switchport access vlan 1
+!
+interface Ethernet0/6
+ switchport access vlan 1
+!
+interface Ethernet0/7
+ switchport access vlan 1
+!
+interface Vlan1
+ nameif inside
+ security-level 100
+ ip address 192.168.10.1 255.255.255.0
+!
+interface Vlan2
+ nameif outside
+ security-level 0
+ ip address 209.165.200.234 255.255.255.248
+!
+object network inside-net
+ subnet 192.168.10.0 255.255.255.0
+!
+route outside 0.0.0.0 0.0.0.0 209.165.200.233 1
+!
+!
+!
+object network inside-net
+ nat (inside,outside) dynamic interface
+!
+aaa authentication ssh console LOCAL
+!
+username admin password .vMR4ts6hGyvBErZ encrypted
+!
+class-map inspection_default
+ match default-inspection-traffic
+!
+policy-map global_policy
+ class inspection_default
+  inspect icmp 
+!
+service-policy global_policy global
+!
+telnet timeout 5
+ssh 192.168.10.0 255.255.255.0 inside
+ssh 172.30.3.3 255.255.255.255 outside
+ssh timeout 10
+!
+dhcpd auto_config outside
+!
+!
+dhcpd address 192.168.10.5-192.168.10.30 inside
+dhcpd enable inside
+!
+!
+!
+!
