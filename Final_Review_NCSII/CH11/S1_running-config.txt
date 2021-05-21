@@ -106,8 +106,8 @@ interface Vlan1
 !
 ip default-gateway 192.168.10.1
 !
-banner motd #
-unauthorized access prohib #
+banner motd !
+Unauthorized access prohibited!
 !
 !
 !
