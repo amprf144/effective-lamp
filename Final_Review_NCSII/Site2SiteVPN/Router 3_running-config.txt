@@ -1,0 +1,109 @@
+!
+version 15.4
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname R3
+!
+!
+!
+!
+!
+!
+!
+!
+no ip cef
+no ipv6 cef
+!
+!
+!
+!
+crypto isakmp policy 1
+ encr aes 256
+ hash md5
+ lifetime 36000
+!
+crypto isakmp key cisco address 10.10.10.1
+crypto isakmp key cisco address 10.10.20.1
+!
+!
+!
+crypto ipsec transform-set R3-R1 esp-aes 256 esp-md5-hmac
+!
+crypto map R3-R1 1 ipsec-isakmp 
+ set peer 10.10.20.1
+ set transform-set R3-R1 
+ match address 100
+!
+crypto map R3-R1 255 ipsec-isakmp 
+ set peer 10.10.20.1
+ set security-association lifetime seconds 36000
+ set transform-set R3-R1 
+ match address 100
+!
+!
+crypto map R3-R1-Map 1 ipsec-isakmp 
+ ! Incomplete
+ set transform-set R3-R1 
+ match address 100
+!
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface GigabitEthernet0/0/0
+ ip address 10.10.40.1 255.255.255.0
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/0/1
+ ip address 10.10.30.2 255.255.255.0
+ duplex auto
+ speed auto
+ crypto map R3-R1-Map
+!
+interface GigabitEthernet0/0/2
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+ip classless
+!
+ip flow-export version 9
+!
+!
+access-list 100 permit ip any 10.10.10.0 0.0.0.255
+access-list 100 permit ip 0.0.0.2 255.255.255.0 10.10.10.0 0.0.0.255
+access-list 100 permit ip 0.0.0.0 255.255.255.0 10.10.10.0 0.0.0.255
+access-list 100 permit ip any 10.10.20.0 0.0.0.255
+!
+!
+!
+!
+!
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+!
+!
+end
+
