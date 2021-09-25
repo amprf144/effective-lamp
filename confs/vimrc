@@ -1,16 +1,44 @@
+
 set nocompatible
+colorscheme space-vim-dark
+color srcery
 set laststatus=2
 set confirm
-set backup
-set backupdir=/tmp/vi
+
+set number	
+set linebreak	
+set showbreak=+++	
+set textwidth=100	
+set showmatch	
+set spell	
+set errorbells	
+set visualbell	
+ 
+set hlsearch	
+set smartcase	
+set ignorecase	
+set incsearch	
+syntax on
+set autoindent	
+ 
+
+set confirm	
+set ruler	
+set showtabline=2	
+ 
+set undolevels=1000	
+set backspace=indent,eol,start	
+ 
 set wrap
 set ignorecase
 set showcmd
 set ruler
+set guifont=IBMPlexMono-Medium
 set undolevels=1000
 set number
 if has('gui_running')
   set guioptions-=T  " no toolbar
-  colorscheme frontier-contrast
+  colorscheme srcery
   set hlsearch
 endif
+
